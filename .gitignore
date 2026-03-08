@@ -47,3 +47,5 @@ Thumbs.db
 .cache/
 .mypy_cache/
 .pyre/
+app/MLModels/yield_prediction/*.pkl
+app/MLModels/weather_forecast/*.pkl
