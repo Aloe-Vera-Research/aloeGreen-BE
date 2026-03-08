@@ -27,6 +27,11 @@ async def dashboard():
             "farmerPrice": d.get("farmerPrice"),
             "webPrice": d.get("webPrice"),
             "totalCost": d.get("totalCost"),
+            "predictedPrice": d.get("predictedPrice"),
+            "naturalDisaster": d.get("naturalDisaster"),
+            "advice": d.get("advice"),
+            "location": d.get("location"),
+            "locationName": d.get("locationName"),
         }
         for d in docs
     ]
