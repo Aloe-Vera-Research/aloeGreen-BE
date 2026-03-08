@@ -1,0 +1,7 @@
+{
+    "rf_weight": 0.5624475172144681,
+    "xgb_weight": 0.43755248278553194,
+    "weighting_method": "inverse RMSE (validation)",
+    "ensemble_rmse": 10.06000672114856,
+    "ensemble_r2": 0.8912456440919623
+}
