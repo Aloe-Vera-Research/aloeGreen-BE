@@ -1,0 +1,83 @@
+# ----------------------
+# Python
+# ----------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled files
+*.so
+*.pyd
+*.pyo
+
+# ----------------------
+# Virtual Environment
+# ----------------------
+venv/
+env/
+ENV/
+.venv/
+
+# ----------------------
+# Environment Variables
+# ----------------------
+.env
+.env.*
+
+# ----------------------
+# Logs
+# ----------------------
+*.log
+
+# ----------------------
+# OS Files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# IDE / Editors
+# ----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------
+# Python Packaging
+# ----------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------------------
+# Cache
+# ----------------------
+.cache/
+.pytest_cache/
+.mypy_cache/
+
+# ----------------------
+# Jupyter Notebook
+# ----------------------
+.ipynb_checkpoints
+
+# ----------------------
+# Temporary Files
+# ----------------------
+*.tmp
+*.temp
+
+# ----------------------
+# Database
+# ----------------------
+*.sqlite3
+*.db
+
+# ----------------------
+# Coverage reports
+# ----------------------
+htmlcov/
+.coverage
+.coverage.*
