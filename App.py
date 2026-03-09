@@ -13,9 +13,11 @@ from app.Controllers.price import (
 
 from app.Controllers.fertilizer.routes import router as fertilizer_router
 from app.Controllers.disease import disease_controller
+from app.Controllers.community_alert import alert_controller
 
 app = FastAPI(title="AloeGreen Backend API")
 
+# Enable CORS (allow mobile app requests)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,27 +25,46 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# -----------------------------
 # Price module routes
+# -----------------------------
 app.include_router(data_controller.router, prefix="/data")
 app.include_router(predict_controller.router, prefix="/api")
 app.include_router(risk_controller.router, prefix="/api")
 app.include_router(dashboard_controller.router, prefix="/api")
 
-# Weather forecast
-# app.include_router(forecast_controller.router, prefix="/api")
+# -----------------------------
+# Community Alert module
+# -----------------------------
+app.include_router(alert_controller.router, prefix="/api")
 
-# Yield module routes
-# app.include_router(yield_controller.router)
-
-# Fertilizer module
-app.include_router(fertilizer_router)
-
-# Disease module
+# -----------------------------
+# Disease detection module
+# -----------------------------
 app.include_router(disease_controller.router, prefix="/api")
 
+# -----------------------------
+# Fertilizer module
+# -----------------------------
+app.include_router(fertilizer_router)
+
+# -----------------------------
+# Disabled modules (for now)
+# -----------------------------
+# app.include_router(forecast_controller.router, prefix="/api")
+# app.include_router(yield_controller.router)
+
+# -----------------------------
+# Root endpoint
+# -----------------------------
 @app.get("/")
 def root():
     return {
         "message": "FastAPI backend is live",
-        "modules": ["price", "fertilizer", "disease"]
+        "modules": [
+            "price",
+            "fertilizer",
+            "disease",
+            "community_alert"
+        ]
     }
