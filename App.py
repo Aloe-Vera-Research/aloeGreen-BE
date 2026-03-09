@@ -8,11 +8,11 @@ from app.Controllers.price import (
     dashboard_controller,
 )
 
-from app.Controllers.yield_prediction import yield_controller
-from app.Controllers.weather_forecast import forecast_controller
+# from app.Controllers.yield_prediction import yield_controller
+# from app.Controllers.weather_forecast import forecast_controller
 
-# NEW
 from app.Controllers.fertilizer.routes import router as fertilizer_router
+from app.Controllers.disease import disease_controller
 
 app = FastAPI(title="AloeGreen Backend API")
 
@@ -30,17 +30,20 @@ app.include_router(risk_controller.router, prefix="/api")
 app.include_router(dashboard_controller.router, prefix="/api")
 
 # Weather forecast
-app.include_router(forecast_controller.router, prefix="/api")
+# app.include_router(forecast_controller.router, prefix="/api")
 
 # Yield module routes
-app.include_router(yield_controller.router)
+# app.include_router(yield_controller.router)
 
-# NEW Fertilizer module
+# Fertilizer module
 app.include_router(fertilizer_router)
+
+# Disease module
+app.include_router(disease_controller.router, prefix="/api")
 
 @app.get("/")
 def root():
     return {
         "message": "FastAPI backend is live",
-        "modules": ["price", "yield", "fertilizer"]
+        "modules": ["price", "fertilizer", "disease"]
     }
