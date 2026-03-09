@@ -8,8 +8,8 @@ from app.Controllers.price import (
     dashboard_controller,
 )
 
-# from app.Controllers.yield_prediction import yield_controller
-# from app.Controllers.weather_forecast import forecast_controller
+from app.Controllers.yield_prediction import yield_controller
+from app.Controllers.weather_forecast import forecast_controller
 
 from app.Controllers.fertilizer.routes import router as fertilizer_router
 from app.Controllers.disease import disease_controller
@@ -47,12 +47,8 @@ app.include_router(disease_controller.router, prefix="/api")
 # Fertilizer module
 # -----------------------------
 app.include_router(fertilizer_router)
-
-# -----------------------------
-# Disabled modules (for now)
-# -----------------------------
-# app.include_router(forecast_controller.router, prefix="/api")
-# app.include_router(yield_controller.router)
+app.include_router(forecast_controller.router, prefix="/api")
+app.include_router(yield_controller.router)
 
 # -----------------------------
 # Root endpoint
@@ -64,6 +60,7 @@ def root():
         "modules": [
             "price",
             "fertilizer",
+            "yield",
             "disease",
             "community_alert"
         ]
