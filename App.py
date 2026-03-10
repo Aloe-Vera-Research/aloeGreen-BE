@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+
+from app.Utils.iot_mqtt_to_mongo import start_mqtt_to_mongo_worker
 
 from app.Controllers.price import (
     data_controller,
@@ -13,13 +16,35 @@ from app.Controllers.weather_forecast import forecast_controller
 from app.Controllers.fertilizer.routes import router as fertilizer_router
 from app.Controllers.disease import disease_controller
 from app.Controllers.community_alert import alert_controller
-
-# NEW: IoT routes
 from app.Controllers.iot import iot_controller
 
-app = FastAPI(title="AloeGreen Backend API")
+mqtt_client_instance = None
 
-# Enable CORS (allow mobile app requests)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global mqtt_client_instance
+
+    print("Starting MQTT to MongoDB worker...")
+    mqtt_client_instance = start_mqtt_to_mongo_worker()
+
+    yield
+
+    print("Shutting down MQTT worker...")
+    if mqtt_client_instance:
+        try:
+            mqtt_client_instance.loop_stop()
+            mqtt_client_instance.disconnect()
+        except Exception as e:
+            print("Error while stopping MQTT client:", e)
+
+
+app = FastAPI(
+    title="AloeGreen Backend API",
+    lifespan=lifespan
+)
+
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
