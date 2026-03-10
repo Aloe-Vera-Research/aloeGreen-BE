@@ -10,10 +10,12 @@ from app.Controllers.price import (
 
 from app.Controllers.yield_prediction import yield_controller
 from app.Controllers.weather_forecast import forecast_controller
-
 from app.Controllers.fertilizer.routes import router as fertilizer_router
 from app.Controllers.disease import disease_controller
 from app.Controllers.community_alert import alert_controller
+
+# NEW: IoT routes
+from app.Controllers.iot import iot_controller
 
 app = FastAPI(title="AloeGreen Backend API")
 
@@ -48,7 +50,16 @@ app.include_router(disease_controller.router, prefix="/api")
 # -----------------------------
 app.include_router(fertilizer_router)
 app.include_router(forecast_controller.router, prefix="/api")
+
+# -----------------------------
+# Yield module
+# -----------------------------
 app.include_router(yield_controller.router)
+
+# -----------------------------
+# IoT module
+# -----------------------------
+app.include_router(iot_controller.router, prefix="/api/iot", tags=["iot"])
 
 # -----------------------------
 # Root endpoint
@@ -62,6 +73,7 @@ def root():
             "fertilizer",
             "yield",
             "disease",
-            "community_alert"
+            "community_alert",
+            "iot"
         ]
     }
