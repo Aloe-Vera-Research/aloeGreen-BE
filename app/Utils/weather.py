@@ -1,40 +1,68 @@
 import requests
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
+def detect_natural_disaster(lat: float, lon: float):
 
-API_KEY = os.getenv("WEATHER_API_KEY")
-CITY = os.getenv("WEATHER_CITY")
+    try:
 
-def detect_natural_disaster():
-    url = (
-        f"https://api.openweathermap.org/data/2.5/weather"
-        f"?q={CITY}&appid={API_KEY}&units=metric"
-    )
+        # WEATHER API
+        weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,precipitation&hourly=precipitation&forecast_days=1"
 
-    response = requests.get(url, timeout=10)
-    data = response.json()
+        response = requests.get(weather_url, timeout=10)
+        weather_data = response.json()
 
-   
-    if response.status_code != 200:
-        return "No disaster"
+        current = weather_data.get("current", {})
 
-  
-    rainfall_1h = data.get("rain", {}).get("1h", 0)
+        temperature = current.get("temperature_2m", 0)
+        current_precipitation = current.get("precipitation", 0)
 
-  
-    temperature = data.get("main", {}).get("temp", 0)
+        hourly = weather_data.get("hourly", {}).get("precipitation", [])
 
-   
-    daily_rainfall = rainfall_1h * 24
+        if len(hourly) >= 24:
+            daily_rainfall = sum(hourly[:24])
+        else:
+            daily_rainfall = current_precipitation * 24
 
-  
-    if daily_rainfall >= 200:
-        return "Flood"
+        # DISASTER LOGIC
+        if daily_rainfall >= 200:
+            disaster = "Flood"
+            advice = "Improve drainage and avoid harvesting"
 
+        elif daily_rainfall < 5 and temperature >= 32:
+            disaster = "Drought"
+            advice = "Increase irrigation"
 
-    if daily_rainfall < 5 and temperature >= 32:
-        return "Drought"
+        else:
+            disaster = "No disaster"
+            advice = "Normal farming conditions"
 
-    return "No disaster"
+        # LOCATION NAME USING REVERSE GEOCODING
+        geo_url = f"https://geocoding-api.open-meteo.com/v1/reverse?latitude={lat}&longitude={lon}&language=en"
+
+        geo_response = requests.get(geo_url, timeout=10)
+        geo_data = geo_response.json()
+
+        location_name = "Unknown"
+
+        if "results" in geo_data and len(geo_data["results"]) > 0:
+            place = geo_data["results"][0]
+            city = place.get("name", "")
+            country = place.get("country", "")
+            location_name = f"{city}, {country}"
+
+        return {
+            "disaster": disaster,
+            "advice": advice,
+            "location": f"{lat:.4f}, {lon:.4f}",
+            "locationName": location_name
+        }
+
+    except Exception as e:
+
+        print("Weather API error:", e)
+
+        return {
+            "disaster": "Unknown",
+            "advice": "Weather service unavailable",
+            "location": f"{lat:.4f}, {lon:.4f}",
+            "locationName": "Unknown"
+        }

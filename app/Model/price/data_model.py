@@ -16,3 +16,5 @@ class PriceData(BaseModel):
     plantDate: Optional[str] = None
     harvestDate: Optional[str] = None
     predictedPrice: Optional[float] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None

@@ -25,15 +25,24 @@ async def add_data(payload: PriceData):
     # Exclude None fields so we don't insert nulls for optional dates.
     data = payload.dict(exclude_none=True)
 
-    # Auto-detect disaster regardless of what the client may have sent.
-    data["naturalDisaster"] = detect_natural_disaster()
+    # Detect weather condition using provided lat/lon or fallback
+    weather_info = detect_natural_disaster(payload.latitude, payload.longitude)
+
+    # Add weather and location data to the record
+    data["naturalDisaster"] = weather_info["disaster"]
+    data["advice"] = weather_info["advice"]
+    data["location"] = weather_info["location"]
+    data["locationName"] = weather_info["locationName"]
     data["createdAt"] = datetime.utcnow()
 
     result = await data_collection.insert_one(data)
 
     return {
         "message": "Data saved successfully",
-        "naturalDisaster": data["naturalDisaster"],
         "predictedPrice": data.get("predictedPrice"),
+        "naturalDisaster": data["naturalDisaster"],
+        "advice": data["advice"],
+        "location": data["location"],
+        "locationName": data["locationName"],
         "id": str(result.inserted_id)
     }
