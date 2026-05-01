@@ -12,3 +12,6 @@ db = client[DB_NAME]
 
 data_collection = db["price_data"]
 scan_history_collection = db["scan_history"]
+
+# Fertilizer prediction history collection
+fertilizer_history_collection = db["fertilizer_prediction_history"]
