@@ -11,3 +11,4 @@ client = AsyncIOMotorClient(MONGO_URI)
 db = client[DB_NAME]
 
 data_collection = db["price_data"]
+scan_history_collection = db["scan_history"]
