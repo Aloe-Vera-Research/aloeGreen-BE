@@ -129,6 +129,7 @@ class FutureYieldPredictionInput(BaseModel):
     irrigation_mm: float
     plant_age_months: int
     soil_texture_enc: int
+    device_id: Optional[str] = "device01"
 
 
 class FutureYieldPredictionResponse(BaseModel):
@@ -138,3 +139,6 @@ class FutureYieldPredictionResponse(BaseModel):
     predictions: PredictionOutput
     gel_weight_g: float
     timestamp: str
+    history_source: Optional[str] = None
+    history_records_used: Optional[int] = None
+    forecast_hours_ahead: Optional[int] = None
