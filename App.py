@@ -17,6 +17,7 @@ from app.Controllers.fertilizer.routes import router as fertilizer_router
 from app.Controllers.disease import disease_controller
 from app.Controllers.community_alert import alert_controller
 from app.Controllers.iot import iot_controller
+from app.Controllers.environment import environment_controller
 
 mqtt_client_instance = None
 
@@ -44,7 +45,9 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# -----------------------------
 # Enable CORS
+# -----------------------------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -74,6 +77,10 @@ app.include_router(disease_controller.router, prefix="/api")
 # Fertilizer module
 # -----------------------------
 app.include_router(fertilizer_router)
+
+# -----------------------------
+# Weather forecast module
+# -----------------------------
 app.include_router(forecast_controller.router, prefix="/api")
 
 # -----------------------------
@@ -87,6 +94,12 @@ app.include_router(yield_controller.router)
 app.include_router(iot_controller.router, prefix="/api/iot", tags=["iot"])
 
 # -----------------------------
+# Environment latest data module
+# Frontend URL: /environment/latest
+# -----------------------------
+app.include_router(environment_controller.router)
+
+# -----------------------------
 # Root endpoint
 # -----------------------------
 @app.get("/")
@@ -97,8 +110,10 @@ def root():
             "price",
             "fertilizer",
             "yield",
+            "weather_forecast",
             "disease",
             "community_alert",
-            "iot"
+            "iot",
+            "environment"
         ]
     }
