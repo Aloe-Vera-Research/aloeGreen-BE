@@ -10,41 +10,111 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
     Returns risk level, icon, color, title, description, recommendations.
     """
     if disaster == "Flood":
-        return {
-            "level": "High Risk",
-            "color": "#1d4ed8",
-            "bg": "#dbeafe",
-            "icon": "AlertCircle",
-            "title": "Flood Warning",
-            "description": "Excess water may damage roots and increase disease risk.",
-            "yield_impact": "Yield may decrease by 20–40%.",
-            "price_impact": "Prices may increase due to reduced supply.",
-            "recommendations": [
-                "Improve field drainage immediately",
-                "Avoid additional irrigation",
-                "Monitor plants for fungal diseases",
-                "Delay harvesting until water recedes",
-                "Check roots for root rot signs",
-            ],
-        }
+        if price_diff >= 20:
+            return {
+                "level": "High Risk",
+                "color": "#b91c1c",
+                "bg": "#fee2e2",
+                "icon": "AlertCircle",
+                "title": "Flood Warning",
+                "description": "Excess water may damage roots and increase disease risk.",
+                "yield_impact": "Yield may decrease by 20–40%.",
+                "price_impact": "Prices may increase due to reduced supply.",
+                "recommendations": [
+                    "Improve field drainage immediately",
+                    "Avoid additional irrigation",
+                    "Monitor plants for fungal diseases",
+                    "Delay harvesting until water recedes",
+                    "Check roots for root rot signs",
+                ],
+            }
+        elif price_diff >= 0:
+            return {
+                "level": "Medium Risk",
+                "color": "#f59e0b",
+                "bg": "#fef3c7",
+                "icon": "AlertTriangle",
+                "title": "Flood Alert",
+                "description": "Flood conditions are present but impact is moderate.",
+                "yield_impact": "Yield may decrease by 10–20%.",
+                "price_impact": "Prices may rise moderately as supply is affected.",
+                "recommendations": [
+                    "Check drainage channels and remove blockages",
+                    "Protect young plants from standing water",
+                    "Reduce fertilizer applications until fields dry",
+                    "Monitor weather updates closely",
+                ],
+            }
+        else:
+            return {
+                "level": "Low Risk",
+                "color": "#047857",
+                "bg": "#d1fae5",
+                "icon": "CheckCircle",
+                "title": "Flood Condition Under Control",
+                "description": "Flood risk is low and conditions are manageable.",
+                "yield_impact": "Minimal yield impact expected.",
+                "price_impact": "Prices are likely to remain stable.",
+                "recommendations": [
+                    "Keep drainage clear and inspect the field",
+                    "Continue normal irrigation once waters recede",
+                    "Watch for early signs of disease",
+                    "Prepare for further weather changes",
+                ],
+            }
     elif disaster == "Drought":
-        return {
-            "level": "Medium Risk",
-            "color": "#c2410c",
-            "bg": "#fed7aa",
-            "icon": "AlertTriangle",
-            "title": "Drought Detected",
-            "description": "Low rainfall and high temperatures may reduce crop yield.",
-            "yield_impact": "Yield may decrease by 15–30%.",
-            "price_impact": "Prices may increase due to reduced supply.",
-            "recommendations": [
-                "Implement drip irrigation to conserve water",
-                "Apply mulch to retain soil moisture",
-                "Monitor plants daily for stress signs",
-                "Harvest early if plant health declines",
-                "Consider shade farming techniques",
-            ],
-        }
+        if price_diff >= 10:
+            return {
+                "level": "High Risk",
+                "color": "#b91c1c",
+                "bg": "#fee2e2",
+                "icon": "AlertCircle",
+                "title": "Drought Warning",
+                "description": "Low rainfall and high temperatures are stressing crops.",
+                "yield_impact": "Yield may decrease by 20–40%.",
+                "price_impact": "Prices may increase due to reduced supply.",
+                "recommendations": [
+                    "Implement drip irrigation to conserve water",
+                    "Apply mulch to retain soil moisture",
+                    "Monitor plants daily for stress signs",
+                    "Harvest early if plant health declines",
+                    "Consider shade farming techniques",
+                ],
+            }
+        elif price_diff >= 0:
+            return {
+                "level": "Medium Risk",
+                "color": "#f59e0b",
+                "bg": "#fef3c7",
+                "icon": "AlertTriangle",
+                "title": "Drought Alert",
+                "description": "Drought is developing and crop stress is moderate.",
+                "yield_impact": "Yield may decrease by 10–20%.",
+                "price_impact": "Prices may rise as supply tightens.",
+                "recommendations": [
+                    "Increase soil moisture monitoring",
+                    "Use mulch and shade to reduce evaporation",
+                    "Schedule irrigation for peak heat times",
+                    "Inspect plants for early stress symptoms",
+                ],
+            }
+        else:
+            return {
+                "level": "Low Risk",
+                "color": "#047857",
+                "bg": "#d1fae5",
+                "icon": "CheckCircle",
+                "title": "Drought Conditions Mild",
+                "description": "Drought is present but impacts are currently low.",
+                "yield_impact": "Yield may be slightly reduced.",
+                "price_impact": "Prices are likely to stay close to normal.",
+                "recommendations": [
+                    "Maintain efficient irrigation practices",
+                    "Use mulch or cover crops to preserve moisture",
+                    "Monitor soil moisture regularly",
+                    "Plan for targeted watering during hot periods",
+                ],
+            }
     else:  # No disaster
         risk_desc = "Environmental conditions are stable for aloe cultivation."
         yield_msg = "No yield reduction expected."
