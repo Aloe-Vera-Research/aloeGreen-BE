@@ -20,6 +20,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Excess water may damage roots and increase disease risk.",
                 "yield_impact": "Yield may decrease by 20–40%.",
                 "price_impact": "Prices may increase due to reduced supply.",
+                "percentage": 40,
                 "recommendations": [
                     "Improve field drainage immediately",
                     "Avoid additional irrigation",
@@ -38,6 +39,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Flood conditions are present but impact is moderate.",
                 "yield_impact": "Yield may decrease by 10–20%.",
                 "price_impact": "Prices may rise moderately as supply is affected.",
+                "percentage": 20,
                 "recommendations": [
                     "Check drainage channels and remove blockages",
                     "Protect young plants from standing water",
@@ -55,6 +57,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Flood risk is low and conditions are manageable.",
                 "yield_impact": "Minimal yield impact expected.",
                 "price_impact": "Prices are likely to remain stable.",
+                "percentage": 10,
                 "recommendations": [
                     "Keep drainage clear and inspect the field",
                     "Continue normal irrigation once waters recede",
@@ -73,6 +76,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Low rainfall and high temperatures are stressing crops.",
                 "yield_impact": "Yield may decrease by 20–40%.",
                 "price_impact": "Prices may increase due to reduced supply.",
+                "percentage": 40,
                 "recommendations": [
                     "Implement drip irrigation to conserve water",
                     "Apply mulch to retain soil moisture",
@@ -91,6 +95,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Drought is developing and crop stress is moderate.",
                 "yield_impact": "Yield may decrease by 10–20%.",
                 "price_impact": "Prices may rise as supply tightens.",
+                "percentage": 20,
                 "recommendations": [
                     "Increase soil moisture monitoring",
                     "Use mulch and shade to reduce evaporation",
@@ -108,6 +113,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Drought is present but impacts are currently low.",
                 "yield_impact": "Yield may be slightly reduced.",
                 "price_impact": "Prices are likely to stay close to normal.",
+                "percentage": 10,
                 "recommendations": [
                     "Maintain efficient irrigation practices",
                     "Use mulch or cover crops to preserve moisture",
@@ -131,6 +137,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Web price significantly lower than farm gate price.",
                 "yield_impact": "No immediate yield impact.",
                 "price_impact": f"Web price {price_diff:.0f} LKR below farm gate price. Market demand may be low.",
+                "percentage": 30,
                 "recommendations": [
                     "Reduce direct market sales to wholesale",
                     "Delay harvest to wait for better rates",
@@ -148,6 +155,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": "Web price is lower than farm gate price.",
                 "yield_impact": yield_msg,
                 "price_impact": f"Web price {price_diff:.0f} LKR below farm gate. Margins are thin.",
+                "percentage": 15,
                 "recommendations": [
                     "Monitor market trends closely",
                     "Negotiate with buyers for better rates",
@@ -165,6 +173,7 @@ def get_risk_level_and_info(disaster: str, price_diff: float) -> dict:
                 "description": risk_desc,
                 "yield_impact": yield_msg,
                 "price_impact": price_msg,
+                "percentage": 5,
                 "recommendations": [
                     "Continue standard irrigation practices",
                     "Monitor soil moisture weekly",

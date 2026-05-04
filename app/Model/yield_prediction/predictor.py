@@ -131,16 +131,16 @@ class AloePredictor:
             self.w_xgb = self.ensemble_config.get("xgb_weight", 0.5)
             self.models_loaded = True
 
-            print("✅ Yield models loaded successfully")
+            print(" Yield models loaded successfully")
             print(f"   RF weight: {self.w_rf:.4f}, XGB weight: {self.w_xgb:.4f}")
 
         except FileNotFoundError as e:
             self.models_loaded = False
-            print(f"⚠️ Yield model file not found: {e}")
+            print(f" Yield model file not found: {e}")
 
         except Exception as e:
             self.models_loaded = False
-            print(f"❌ Error loading yield models: {e}")
+            print(f" Error loading yield models: {e}")
 
     def predict(self, data: Dict) -> Dict[str, float]:
         if not self.models_loaded:

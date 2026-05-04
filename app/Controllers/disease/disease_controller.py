@@ -28,7 +28,7 @@ async def detect_disease(file: UploadFile = File(...)):
         result = predict_disease(processed_image)
         print("Prediction result:", result)
 
-        # ✅ Save scan history to MongoDB
+        # Save scan history to MongoDB
         await scan_history_collection.insert_one({
             "disease": result["disease"],
             "confidence": float(result["confidence"]),
